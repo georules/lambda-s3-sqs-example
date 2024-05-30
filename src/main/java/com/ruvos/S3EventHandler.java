@@ -1,4 +1,5 @@
 package com.ruvos;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
@@ -18,11 +19,13 @@ public class S3EventHandler implements RequestHandler<SQSEvent, String> {
         String key = record.getS3().getObject().getKey();
 
         context.getLogger().log("Bucket:" + bucket);
-		context.getLogger().log("Key:" + key);
+        context.getLogger().log("Key:" + key);
 
         // Note that if any exceptions are thrown, that the lambda will error
-        // We WANT exceptions to throw so that when the lambda fails, the message will stay on the sqs queue
-        // It will then retry, and if the configured number of retries fails, will go the an sqs dead letter queue
+        // We WANT exceptions to throw so that when the lambda fails, the message will
+        // stay on the sqs queue
+        // It will then retry, and if the configured number of retries fails, will go
+        // the an sqs dead letter queue
         return "success";
     }
 }
